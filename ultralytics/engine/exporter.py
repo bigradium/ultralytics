@@ -250,11 +250,11 @@ class Exporter:
         self.im = im
         self.model = model
         self.file = file
-        self.output_shape = (
-            tuple(y.shape)
-            if isinstance(y, torch.Tensor)
-            else tuple(tuple(x.shape if isinstance(x, torch.Tensor) else []) for x in y)
-        )
+        # self.output_shape = (
+        #     tuple(y.shape)
+        #     if isinstance(y, torch.Tensor)
+        #     else tuple(tuple(x.shape if isinstance(x, torch.Tensor) else []) for x in y)
+        # )
         self.pretty_name = Path(self.model.yaml.get("yaml_file", self.file)).stem.replace("yolo", "YOLO")
         data = model.args["data"] if hasattr(model, "args") and isinstance(model.args, dict) else ""
         description = f'Ultralytics {self.pretty_name} model {f"trained on {data}" if data else ""}'
@@ -274,10 +274,10 @@ class Exporter:
         if model.task == "pose":
             self.metadata["kpt_shape"] = model.model[-1].kpt_shape
 
-        LOGGER.info(
-            f"\n{colorstr('PyTorch:')} starting from '{file}' with input shape {tuple(im.shape)} BCHW and "
-            f'output shape(s) {self.output_shape} ({file_size(file):.1f} MB)'
-        )
+        # LOGGER.info(
+        #     f"\n{colorstr('PyTorch:')} starting from '{file}' with input shape {tuple(im.shape)} BCHW and "
+        #     f'output shape(s) {self.output_shape} ({file_size(file):.1f} MB)'
+        # )
 
         # Exports
         f = [""] * len(fmts)  # exported filenames
